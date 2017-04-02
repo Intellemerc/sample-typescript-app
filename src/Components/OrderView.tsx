@@ -7,12 +7,9 @@ import OrderItemsView from './OrderItemsView';
 import OrderLoader from './OrderLoader';
 
 const OrderView = ({resourceObj, isLoaded, isLoading, getAction, className}: resHoc.IResourceProps<Order>) => {
-        if (isLoading) {
-            return <div>Loading...</div>;
-        }
         return (
             <div>
-                <OrderLoader getAction={getAction}/>
+                <OrderLoader getAction={getAction} isDisabled={isLoading}/>
                 {isLoaded ? 
                     (
                         <div>

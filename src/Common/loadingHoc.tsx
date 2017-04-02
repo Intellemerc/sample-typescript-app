@@ -4,8 +4,9 @@ import './loading.css';
 interface ILoadingProps {
 	isLoading: boolean;
 }
-export default (Component: any) => ({ isLoading, ...rest }: ILoadingProps) => {
-	if (isLoading) {
+export default (Component: any) => (props: ILoadingProps) => {
+	const comp = <Component  {...props} />;
+	if (props.isLoading) {
 		return (
 			<div>
 				<div className="spinner">
@@ -13,11 +14,11 @@ export default (Component: any) => ({ isLoading, ...rest }: ILoadingProps) => {
 					<div className="double-bounce2" />
 				</div>
 				<div className="loadingDiv">
-					<Component  {...rest} />
+					{comp}
 				</div>
 			</div>
 		);
 	} else {
-		return <Component {...rest} />;
+		return comp;
 	}
 };
