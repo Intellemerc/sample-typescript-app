@@ -1,13 +1,13 @@
 import BaseModel from './BaseModel';
 
-export class OrderItems extends BaseModel {
+export class OrderItem extends BaseModel {
     // id: number; // inherited
     price: number;
     quantity: number;
 }
 
-export default class Order extends BaseModel {
+export class Order extends BaseModel {
     // id: number; // inherited
     description: string;
-    items: OrderItems[];
+    items: OrderItem[];
 }

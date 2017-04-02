@@ -1,20 +1,10 @@
 import * as React from 'react';
 
-import Order from '../Resources/Order';
+import { Order } from '../Resources/Order';
 import resourceHoc, * as resHoc from '../Common/resourceHoc';
-import * as resActions from '../Common/resourceActions';
 
-const  OrderIdField = ({getAction}: {getAction: resActions.resourceFnById}) => {
-    let orderIdInput: HTMLInputElement;     
-    return (
-            <div>
-                <input label="OrderId" ref={(input) => orderIdInput = input as HTMLInputElement} />
-                <button onClick={() => getAction(orderIdInput.value)}>
-                    Load Orders
-                </button>
-            </div>
-        );
-};
+import OrderItemsView from './OrderItemsView';
+import OrderLoader from './OrderLoader';
 
 const OrderView = ({resource, isLoaded, isLoading, getAction}: resHoc.IResourceProps<Order>) => {
         if (isLoading) {
@@ -22,17 +12,21 @@ const OrderView = ({resource, isLoaded, isLoading, getAction}: resHoc.IResourceP
         }
         return (
             <div>
-                <OrderIdField getAction={getAction}/>
+                <OrderLoader getAction={getAction}/>
                 {isLoaded ? 
                     (
                         <div>
                             <h3>Orders: </h3>
                             <div>Id: {resource.id}</div>
                             <div>Description: {resource.description}</div>
-                            
+                            <div style={{pading: 20, width: 400, margin: 'auto'}}>
+                                {resource.items.map((orderItem) => 
+                                    <OrderItemsView key={orderItem.id} item={orderItem} />)
+                                }
+                            </div>
                         </div>
                     )
-                    : <h3>Nothing Loaded</h3>
+                    : <h3>Enter an Order Id and click Load Orders</h3>
                 }
             </div>
         );

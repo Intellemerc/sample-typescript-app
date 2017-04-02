@@ -1,18 +1,18 @@
 
 const getRandomInt = ( max: number) => {
-    return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max) + 1;
 };
 
 const getFakeResource = (resource: string, data: any) => {
     switch (resource) {
         case 'Order':
+            const orderItems = [];
+            for (let i = 0, length = getRandomInt(30); i < length; i++) {
+                orderItems.push({id: data.id + '-' + i, price: getRandomInt(10), quantity: getRandomInt(50)});
+            }
             return {
                 description: 'fake order ' + data.id,
-                items: [
-                    {price: getRandomInt(10), quantity: getRandomInt(50)},
-                    {price: getRandomInt(500), quantity: getRandomInt(50)},
-                    {price: getRandomInt(40), quantity: getRandomInt(50)}
-                ],
+                items: orderItems,
                 ...data, // overwrite old data
                 retrivedAt: new Date()
             };
@@ -25,7 +25,7 @@ const getFakeResource = (resource: string, data: any) => {
     
 };
 
-const fakeDelay = 1000;
+const fakeDelay = 0;
 class API {
     get(resource: string, resourceId: number) {
         return new Promise((resolve) => {

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import * as ResReducer from './Common/resourceReducer';
-import Order from './Resources/Order';
+import { Order } from './Resources/Order';
 
 export interface IAppState {
     Order: ResReducer.IResourceEntry<Order>;
