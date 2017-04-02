@@ -29,7 +29,7 @@ const OrderView = ({resource, isLoaded, isLoading, getAction}: resHoc.IResourceP
                             <h3>Orders: </h3>
                             <div>Id: {resource.id}</div>
                             <div>Description: {resource.description}</div>
-                            <div>Items: {resource.items}</div>
+                            
                         </div>
                     )
                     : <h3>Nothing Loaded</h3>

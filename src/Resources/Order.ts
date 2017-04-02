@@ -9,5 +9,5 @@ export class OrderItems extends BaseModel {
 export default class Order extends BaseModel {
     // id: number; // inherited
     description: string;
-    items: OrderItems;
+    items: OrderItems[];
 }

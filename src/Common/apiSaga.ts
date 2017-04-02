@@ -1,11 +1,12 @@
-import { put, fork, takeEvery } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
+import { put, fork, takeEvery, call } from 'redux-saga/effects';
+
 import * as Actions from './resourceActions';
+import API from './api';
 
 function* apiFetchCalled({payload: {resourceType, resourceId}}: Actions.IResourceByIdAction) {
-   
-    yield delay(3000);
-    yield put({type: 'testAPIFetch', payload: {resourceType, resourceId}});
+    const actionNames = Actions.getActionNames(resourceType);
+    const result = yield call(API.get, resourceType, resourceId);
+    yield put({type: actionNames.fetched, payload: result});
 }
 
 function* watch() {

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { IReduxAction } from '../../Types/ReduxAction';
 import BaseModel from '../Resources/BaseModel';
 
-import getActionNames from './resourceActions';
+import { getActionNames } from './resourceActions';
 
 export interface IResourceEntry<T extends BaseModel>{
     resource: T;
@@ -11,7 +11,7 @@ export interface IResourceEntry<T extends BaseModel>{
 	error?: string;
 }
 export const resourceReducer =  <T extends BaseModel>(ctor: { new (): T }) => {
-	const actionNames = getActionNames(ctor).actionNames();
+	const actionNames = getActionNames(ctor.name);
 	const objectReducer = (state = {}, action: IReduxAction<T>) => {
 		switch (action.type) {
 			case actionNames.fetched:

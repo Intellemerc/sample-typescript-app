@@ -43,16 +43,14 @@ export interface IResourceActionList {
 	postAction: resourceFnByResource;
 	deleteAction: resourceFnById;
 }
-
+export const getActionNames = (resourceName: string): IAPIActionTypes => {
+        return {
+            fetching: `API/${resourceName}_${API_CALL_IN_PROGRESS}`, // API/Orders/FETCHING
+            fetched: `API/${resourceName}_${API_CALL_FINISHED}`, // API/Orders/FETCHED
+            failed: `API/${resourceName}_${API_CALL_ERROR}`, // API/Orders/FAILED
+        };
+};
 export default <T extends BaseModel>(ctor: { new (): T }) => {
-    const getActionNames = (): () => IAPIActionTypes =>
-        (): IAPIActionTypes => {
-            return {
-                fetching: `API/${ctor.name}_${API_CALL_IN_PROGRESS}`, // API/Orders/FETCHING
-                fetched: `API/${ctor.name}_${API_CALL_FINISHED}`, // API/Orders/FETCHED
-                failed: `API/${ctor.name}_${API_CALL_ERROR}`, // API/Orders/FAILED
-            };
-    };
     const getResourceAction = (action: string) => (resource: T): IResourceAction<T>  => {
         return {
             type: action,
@@ -86,11 +84,6 @@ export default <T extends BaseModel>(ctor: { new (): T }) => {
         };
     };
     return {
-        actions: getActions(),
-        /**
-         * usage like resourceObj.getActions.fetching returns the string API/GET_Orders/FETCHING. 
-         * for ability to provide custom reducers
-         */ 
-        actionNames: getActionNames()
+        actions: getActions()
     };
 };
