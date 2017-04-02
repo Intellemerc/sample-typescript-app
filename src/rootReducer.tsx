@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux';
 
-import resourceReducer from './Common/resourceReducer';
+import * as ResReducer from './Common/resourceReducer';
 import Order from './Resources/Order';
 
 export interface IAppState {
-    Order: Order;
+    Order: ResReducer.IResourceEntry<Order>;
 };
-
 const reducers = {
-    Order: resourceReducer(Order)
+    Order: ResReducer.resourceReducer(Order),
 };
-const rootApp = combineReducers(reducers);
 
-export default rootApp;
+export default combineReducers<IAppState>(reducers);

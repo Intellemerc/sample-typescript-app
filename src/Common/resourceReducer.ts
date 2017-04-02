@@ -2,11 +2,19 @@ import { combineReducers } from 'redux';
 import { IReduxAction } from '../../Types/ReduxAction';
 import BaseModel from '../Resources/BaseModel';
 
-// TODO: use generics here?
-export default <T extends BaseModel>(ctor: { new (): T }) => {
-	const resourceReducer = (state = [], action: IReduxAction<T>) => {
+import getActionNames from './resourceActions';
+
+export interface IResourceEntry<T extends BaseModel>{
+    resource: T;
+	isLoaded: boolean;
+	isLoading: boolean;
+	error?: string;
+}
+export const resourceReducer =  <T extends BaseModel>(ctor: { new (): T }) => {
+	const actionNames = getActionNames(ctor).actionNames();
+	const objectReducer = (state = {}, action: IReduxAction<T>) => {
 		switch (action.type) {
-			case `API_GET_${ctor.name}_FETCHED`:
+			case actionNames.fetched:
 				return action.payload;
 			default:
 				return state;
@@ -15,9 +23,9 @@ export default <T extends BaseModel>(ctor: { new (): T }) => {
 
 	const loadingReducer = (state = false, action: IReduxAction<T>) => {
 		switch (action.type) {
-			case `API_GET_${ctor.name}_FETCHING`:
+			case actionNames.fetching:
 				return true;
-			case `API_GET_${ctor.name}_FETCHED`:
+			case actionNames.fetched:
 				return false;
 			default:
 				return state;
@@ -26,9 +34,7 @@ export default <T extends BaseModel>(ctor: { new (): T }) => {
 
 	const loadedReducer = (state = false, action: IReduxAction<T>) => {
 		switch (action.type) {
-			case `API_GET_${ctor.name}_FETCHING`:
-				return false;
-			case `API_GET_${ctor.name}_FETCHED`:
+			case actionNames.fetched:
 				return true;
 			default:
 				return state;
@@ -37,20 +43,20 @@ export default <T extends BaseModel>(ctor: { new (): T }) => {
 
 	const errorReducer = (state = null, action: IReduxAction<T>) => {
 		switch (action.type) {
-			case `API_GET_${ctor.name}_FAILURE`:
+			case actionNames.failed:
 				return action.payload;
-			case `API_GET_${ctor.name}_FETCHED`:
-			case `API_GET_${ctor.name}_FETCHING`:
+			case actionNames.fetched:
+			case actionNames.fetching:
 				return null;
 			default:
 				return state;
 		}
 	};
 
-	return combineReducers({
-		items: resourceReducer,
+	return combineReducers<IResourceEntry<T>>({
+		resource: objectReducer,
 		isLoading: loadingReducer,
-		loaded: loadedReducer,
+		isLoaded: loadedReducer,
 		error: errorReducer
 	});
 };
