@@ -6,8 +6,10 @@ import { IAppState } from '../rootReducer';
 import resourceActions, * as ResActions from './resourceActions';
 import * as ResReducer from '../Common/resourceReducer';
 
+import loadingHoc from './loadingHoc';
+
 export interface IResourceProps<T extends BaseModel> 
-		extends ResReducer.IResourceEntry<T>, ResActions.IResourceActionList {
+		extends ResReducer.IResourceEntry<T>, ResActions.IResourceActionList, React.HTMLAttributes<any> {
 
 }
 
@@ -29,15 +31,15 @@ export default <T extends BaseModel>(ctor: { new (): T }) => (Component: any) =>
 		const resource = state[ctor.name];
 
 		return {
-			resource: resource.resource,
+			resourceObj: resource.resourceObj,
 			isLoaded: resource.isLoaded,
 			isLoading: resource.isLoading
 		};
 
 	};
 
-	return connect(
+	return connect<{}, {}, React.HTMLAttributes<any>> (
 		mapStateToProps,
 		mapDispatchToProps
-	)(Component);
+	)(loadingHoc(Component));
 };

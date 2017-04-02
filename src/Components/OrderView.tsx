@@ -6,7 +6,7 @@ import resourceHoc, * as resHoc from '../Common/resourceHoc';
 import OrderItemsView from './OrderItemsView';
 import OrderLoader from './OrderLoader';
 
-const OrderView = ({resource, isLoaded, isLoading, getAction}: resHoc.IResourceProps<Order>) => {
+const OrderView = ({resourceObj, isLoaded, isLoading, getAction, className}: resHoc.IResourceProps<Order>) => {
         if (isLoading) {
             return <div>Loading...</div>;
         }
@@ -17,10 +17,10 @@ const OrderView = ({resource, isLoaded, isLoading, getAction}: resHoc.IResourceP
                     (
                         <div>
                             <h3>Orders: </h3>
-                            <div>Id: {resource.id}</div>
-                            <div>Description: {resource.description}</div>
+                            <div>Id: {resourceObj.id}</div>
+                            <div>Description: {resourceObj.description}</div>
                             <div style={{pading: 20, width: 400, margin: 'auto'}}>
-                                {resource.items.map((orderItem) => 
+                                {resourceObj.items.map((orderItem) => 
                                     <OrderItemsView key={orderItem.id} item={orderItem} />)
                                 }
                             </div>

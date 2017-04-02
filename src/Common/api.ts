@@ -25,7 +25,7 @@ const getFakeResource = (resource: string, data: any) => {
     
 };
 
-const fakeDelay = 0;
+const fakeDelay = 2000;
 class API {
     get(resource: string, resourceId: number) {
         return new Promise((resolve) => {

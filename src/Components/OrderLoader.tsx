@@ -5,7 +5,11 @@ export default ({getAction}: {getAction: resActions.resourceFnById}) => {
     let orderIdInput: HTMLInputElement;     
     return (
             <div>
-                <input placeholder="Order Id" label="OrderId" ref={(input) => orderIdInput = input as HTMLInputElement} />
+                <input 
+                    placeholder="Order Id" 
+                    label="OrderId" 
+                    ref={(input) => orderIdInput = input as HTMLInputElement} 
+                />
                 <button onClick={() => getAction(orderIdInput.value)}>
                     Load Orders
                 </button>

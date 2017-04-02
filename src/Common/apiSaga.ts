@@ -5,7 +5,13 @@ import API from './api';
 
 function* apiFetchCalled({payload: {resourceType, resourceId}}: Actions.IResourceByIdAction) {
     const actionNames = Actions.getActionNames(resourceType);
+    // set the loading flag
+    yield put({type: actionNames.fetching});
+
+    // call the api to get the resource
     const result = yield call(API.get, resourceType, resourceId);
+
+    // pass the results back to redux
     yield put({type: actionNames.fetched, payload: result});
 }
 

@@ -5,7 +5,7 @@ import BaseModel from '../Resources/BaseModel';
 import { getActionNames } from './resourceActions';
 
 export interface IResourceEntry<T extends BaseModel>{
-    resource: T;
+    resourceObj: T;
 	isLoaded: boolean;
 	isLoading: boolean;
 	error?: string;
@@ -54,7 +54,7 @@ export const resourceReducer =  <T extends BaseModel>(ctor: { new (): T }) => {
 	};
 
 	return combineReducers<IResourceEntry<T>>({
-		resource: objectReducer,
+		resourceObj: objectReducer,
 		isLoading: loadingReducer,
 		isLoaded: loadedReducer,
 		error: errorReducer
