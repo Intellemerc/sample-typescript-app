@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import OrderView from './OrderView';
+import OrderView from './Components/OrderView';
 
 const logo = require('./logo.svg');
 

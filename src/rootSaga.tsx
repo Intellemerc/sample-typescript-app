@@ -1,12 +1,8 @@
-import { put } from 'redux-saga/effects';
-
-function* sampleSaga() {
-    yield put({ type: 'Test_Saga'});
-}
+import apiSaga from './Common/apiSaga';
 
 function* rootSaga(): any {
     yield [
-        sampleSaga()
+        apiSaga()
     ];
 }
 

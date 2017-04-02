@@ -7,11 +7,12 @@ import resourceActions, * as ResActions from './resourceActions';
 import * as ResReducer from '../Common/resourceReducer';
 
 export interface IResourceProps<T extends BaseModel> 
-		extends ResReducer.IResourceEntry<T>, ResActions.IResourceActions<T> {
+		extends ResReducer.IResourceEntry<T>, ResActions.IResourceActionList {
 
 }
+
 export default <T extends BaseModel>(ctor: { new (): T }) => (Component: any) => {
-	const mapDispatchToProps = (dispatch: Dispatch<T>): ResActions.IResourceActions<T> => {
+	const mapDispatchToProps = (dispatch: Dispatch<T>): ResActions.IResourceActionList => {
 		const actions = resourceActions(ctor).actions;
 		return bindActionCreators(
 			{

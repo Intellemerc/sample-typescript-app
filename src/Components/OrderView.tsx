@@ -1,12 +1,10 @@
 import * as React from 'react';
 
-import Order from './Resources/Order';
-import resourceHoc, * as resHoc from './Common/resourceHoc';
+import Order from '../Resources/Order';
+import resourceHoc, * as resHoc from '../Common/resourceHoc';
+import * as resActions from '../Common/resourceActions';
 
-interface IOrderIdFieldProps {
-    getAction: any;
-};
-const  OrderIdField = ({getAction}: IOrderIdFieldProps) => {
+const  OrderIdField = ({getAction}: {getAction: resActions.resourceFnById}) => {
     let orderIdInput: HTMLInputElement;     
     return (
             <div>
