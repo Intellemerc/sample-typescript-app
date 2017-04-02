@@ -15,7 +15,12 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true, 
+    "skipLibCheck": true,  
+    "typeRoots": [
+      "node_modules/@types",
+      "../Types"
+    ]
   },
   "exclude": [
     "node_modules",
@@ -25,8 +30,5 @@
     "webpack",
     "jest",
     "src/setupTests.ts"
-  ],
-  "types": [
-    "typePatches"
   ]
 }
