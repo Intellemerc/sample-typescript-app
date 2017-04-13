@@ -16,12 +16,9 @@ const initialState: todoItemModel[] = [
 
 export default function todos(state: todoItemModel[] = initialState, action: Action) {
   if (isType(action, toggleCompleted)) {
-    return state.map(itm => itm.id === action.payload ?
-      {
-        ...itm,
-        completed: !itm.completed
-      } :
-      itm
+    return state.map( 
+                    itm => itm.id === action.payload ?
+                          {...itm, completed: !itm.completed} : itm
     );
   } else if (isType(action, addTodo)) {
     if (action.payload !== '') {
