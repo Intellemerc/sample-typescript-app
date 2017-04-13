@@ -12,7 +12,8 @@
     "@types/redux-saga": "^0.10.5",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-redux": "^5.0.3"
+    "react-redux": "^5.0.3",
+    "typescript-fsa": "^2.0.0"
   },
   "devDependencies": {
     "react-scripts-ts": "1.1.8"
