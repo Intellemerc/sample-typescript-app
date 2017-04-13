@@ -1,5 +1,5 @@
 export default class TodoItemModel {
-    id: number;
+    id: string;
     text: string;
     created: Date;
     completed: boolean;

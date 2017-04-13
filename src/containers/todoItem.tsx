@@ -9,7 +9,7 @@ const Completed = styled.span`
 
 interface Props {
     todo: TodoItemModel;
-    toggleCompleted: (id: number) => void;
+    toggleCompleted: (id: string) => void;
 }
 const TodoItem = ({todo, toggleCompleted}: Props) => (
             <div>
