@@ -1,21 +1,33 @@
 import {Action} from 'redux';
-import todoItem from '../models/todoItem';
+import {isType} from 'typescript-fsa';
 
-const initialState: todoItem[] = [
+import todoItemModel from '../models/todoItemModel';
+import {toggleCompleted} from '../actions/todoAction';
+
+const initialState: todoItemModel[] = [
   {
     id: 0,
     text: 'Use Redux',
-    completedDate: undefined,
+    completed: false,
     created: new Date()
   },
   {
-    id: 0,
+    id: 1,
     text: 'Use Redux',
-    completedDate: new Date(),
+    completed: true,
     created: new Date()
   }
 ];
 
-export default function todos(state: todoItem[] = initialState, action: Action) {
+export default function todos(state: todoItemModel[] = initialState, action: Action) {
+    if (isType(action, toggleCompleted)) {
+      return state.map(itm => itm.id === action.payload ?
+                            {
+                              ...itm,
+                              completed: !itm.completed
+                            } : 
+                            itm
+                      );
+    }
     return state;
 }

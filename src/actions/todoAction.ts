@@ -1,14 +1,7 @@
-import TodoItem from '../models/todoItem';
-import { ActionCreator } from 'redux';
+import TodoItem from '../models/todoItemModel';
+import actionCreatorFactory from 'typescript-fsa';
 
-import { Action } from './ActionTypes';
-
-export const addTodo: ActionCreator<Action<TodoItem>> = (todo: TodoItem) => ({
-        type: 'ADD_TODO',
-        payload: todo
-});
-
-export const removeTodo: ActionCreator<Action<number>> = (todoId: number) => ({
-        type: 'REMOVE_TODO',
-        payload: todoId
-});
+const actionCreator = actionCreatorFactory('TODO');
+export const addTodo = actionCreator<TodoItem>('ADD');
+export const removeTodo = actionCreator<number>('REMOVE');
+export const toggleCompleted = actionCreator<number>('TOGGLE_COMPLETED');
