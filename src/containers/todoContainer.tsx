@@ -8,30 +8,46 @@ import { AppState } from '../AppState';
 import { addTodo, removeTodo, toggleCompleted } from '../actions/todoAction';
 import TodoItem from './todoItem';
 
-const AddTodoContainer = styled.div`
+const TodoListBox = styled.div`
     padding: 15px;
     border: 1px solid black;
-    width: 400px;
+    width: 50%;
     margin: 15px auto;
-
 `;
 
-interface Props {
-    todos: TodoItemModel[];
-    addTodo: (todo: string) => void;
-    toggleCompleted: (id: string) => void;
+interface ExternalProps {
+  PersonsName: string;
+}
+
+interface StoreProps extends ExternalProps {
+  todos: TodoItemModel[];
+  addTodo: (todo: string) => any;
+  removeTodo: (id: string) => any;
+  toggleCompleted: (id: string) => any;
 };
-const TodoContainer = ( {todos, addTodo, toggleCompleted}: Props) => {
+
+const TodoContainer = ({ todos, addTodo, toggleCompleted, removeTodo, PersonsName }: StoreProps) => {
   let todoTextField: HTMLInputElement;
   return (
-    <div>
-      <AddTodoContainer>
-        <div>Add Todo</div>
+    <TodoListBox>
+      <div>
+        <div>Add Todo to {PersonsName}'s List</div>
         <input type="input" ref={ref => todoTextField = ref} />
-        <button onClick={() => addTodo(todoTextField.value )} >Add</button>
-      </AddTodoContainer>
-      {todos.map(itm => <TodoItem key={itm.id} todo={itm} toggleCompleted={toggleCompleted}/>)}
-    </div>
+        <button onClick={() => { addTodo(todoTextField.value); todoTextField.value = ''; }} >Add</button>
+      </div>
+      <div>
+        {todos.map(itm => 
+                    (
+                      <TodoItem 
+                        key={itm.id} 
+                        todo={itm} 
+                        toggleCompleted={toggleCompleted} 
+                        removeTodo={removeTodo} 
+                      />
+                    )
+        )}
+      </div>
+    </TodoListBox>
   );
 };
 
@@ -40,10 +56,10 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AppState>) => {
-    return bindActionCreators({addTodo, removeTodo, toggleCompleted}, dispatch);
+  return bindActionCreators({ addTodo, removeTodo, toggleCompleted }, dispatch);
 };
 
-export default connect(
+export default connect<{}, {}, ExternalProps>(
   mapStateToProps,
   mapDispatchToProps
 )(TodoContainer);
