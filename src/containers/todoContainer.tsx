@@ -31,7 +31,8 @@ interface DispatchProps {
 }
 
 const TodoContainer: (props: ExternalProps & StateProps & DispatchProps) => JSX.Element =
-  ({ todos, addTodo, toggleCompleted, removeTodo, PersonsName }) => {
+  (props) => {
+    const { todos, addTodo, toggleCompleted, removeTodo, PersonsName } = props;
     let todoTextField: HTMLInputElement;
     const submit = (event: any) => {
       addTodo(todoTextField.value);
