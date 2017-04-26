@@ -35,7 +35,7 @@ const TodoContainer: (props: ExternalProps & StateProps & DispatchProps) => JSX.
     const { todos, addTodo, toggleCompleted, removeTodo, PersonsName } = props;
     let todoTextField: HTMLInputElement;
     
-    const handleFormSubmit = (event: any) => {
+    const handleFormSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
       addTodo(todoTextField.value);
       todoTextField.value = '';
       event.preventDefault();
