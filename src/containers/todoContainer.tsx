@@ -34,16 +34,18 @@ const TodoContainer: (props: ExternalProps & StateProps & DispatchProps) => JSX.
   (props) => {
     const { todos, addTodo, toggleCompleted, removeTodo, PersonsName } = props;
     let todoTextField: HTMLInputElement;
-    const submit = (event: any) => {
+    
+    const handleFormSubmit = (event: any) => {
       addTodo(todoTextField.value);
       todoTextField.value = '';
       event.preventDefault();
     };
+    
     return (
       <TodoListBox>
         <div>
           <div>Add Todo to {PersonsName}'s List</div>
-          <form onSubmit={submit}>
+          <form onSubmit={handleFormSubmit}>
             <input type="input" ref={ref => todoTextField = ref} />
             <input type="submit" value="Submit" />
           </form>
