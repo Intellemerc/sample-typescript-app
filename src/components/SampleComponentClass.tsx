@@ -1,11 +1,14 @@
-import TodoItemModel from '../models/todoItemModel';
 import * as React from 'react';
 
+export class Foo {
+    a: string;
+    b: string;
+}
 interface Props {
     stringField?: string;
     numberField?: number;
     booleanField?: boolean;
-    objField?: TodoItemModel;
+    objField?: Foo;
 }
 
 interface State {

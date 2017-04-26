@@ -22,15 +22,16 @@ interface Props {
     toggleCompleted: ActionCreator<string>;
     removeTodo: ActionCreator<string>;
 }
-const TodoItem = ({ todo, toggleCompleted, removeTodo }: Props) => (
-    <div>
-        <input type="checkbox" checked={!!todo.completed} onChange={() => toggleCompleted(todo.id)} /> 
-        {todo.completed ?
-            <Completed>{todo.text}</Completed>
-            : todo.text
-        }
-        <RemoveTodo src={trashIco} onClick={() => removeTodo(todo.id)} />
-    </div>
-);
+const TodoItem: (props: Props) => JSX.Element =
+    ({ todo, toggleCompleted, removeTodo }) => (
+        <div>
+            <input type="checkbox" checked={!!todo.completed} onChange={() => toggleCompleted(todo.id)} />
+            {todo.completed ?
+                <Completed>{todo.text}</Completed>
+                : todo.text
+            }
+            <RemoveTodo src={trashIco} onClick={() => removeTodo(todo.id)} />
+        </div>
+    );
 
 export default TodoItem;
