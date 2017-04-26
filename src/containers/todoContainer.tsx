@@ -20,50 +20,54 @@ interface ExternalProps {
   PersonsName: string;
 }
 
-interface StoreProps extends ExternalProps {
+interface StateProps {
   todos: TodoItemModel[];
+}
+
+interface DispatchProps {
   addTodo: ActionCreator<string>;
   removeTodo: ActionCreator<string>;
   toggleCompleted: ActionCreator<string>;
-};
+}
 
-const TodoContainer = ({ todos, addTodo, toggleCompleted, removeTodo, PersonsName }: StoreProps) => {
-  let todoTextField: HTMLInputElement;
-  const submit = (event: any) => {
-    addTodo(todoTextField.value);
-    todoTextField.value = '';
-    event.preventDefault();
+const TodoContainer: (props: ExternalProps & StateProps & DispatchProps) => JSX.Element =
+  ({ todos, addTodo, toggleCompleted, removeTodo, PersonsName }) => {
+    let todoTextField: HTMLInputElement;
+    const submit = (event: any) => {
+      addTodo(todoTextField.value);
+      todoTextField.value = '';
+      event.preventDefault();
+    };
+    return (
+      <TodoListBox>
+        <div>
+          <div>Add Todo to {PersonsName}'s List</div>
+          <form onSubmit={submit}>
+            <input type="input" ref={ref => todoTextField = ref} />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+        <div>
+          {todos.map(itm =>
+            (
+              <TodoItem
+                key={itm.id}
+                todo={itm}
+                toggleCompleted={toggleCompleted}
+                removeTodo={removeTodo}
+              />
+            )
+          )}
+        </div>
+      </TodoListBox>
+    );
   };
-  return (
-    <TodoListBox>
-      <div>
-        <div>Add Todo to {PersonsName}'s List</div>
-        <form onSubmit={submit}>
-          <input type="input" ref={ref => todoTextField = ref} />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-      <div>
-        {todos.map(itm =>
-          (
-            <TodoItem
-              key={itm.id}
-              todo={itm}
-              toggleCompleted={toggleCompleted}
-              removeTodo={removeTodo}
-            />
-          )
-        )}
-      </div>
-    </TodoListBox>
-  );
-};
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: AppState): StateProps => ({
   todos: state.app.todos
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AppState>) => {
+const mapDispatchToProps = (dispatch: Dispatch<AppState>): DispatchProps => {
   return bindActionCreators(
     {
       addTodo,
@@ -74,7 +78,17 @@ const mapDispatchToProps = (dispatch: Dispatch<AppState>) => {
   );
 };
 
-export default connect<{}, {}, ExternalProps>(
+export default connect<StateProps, DispatchProps, ExternalProps>(
   mapStateToProps,
   mapDispatchToProps
 )(TodoContainer);
+
+/**
+ * Simplier Version
+ */
+/*
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoContainer);
+*/
