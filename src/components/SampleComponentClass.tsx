@@ -1,9 +1,11 @@
+import TodoItemModel from '../models/todoItemModel';
 import * as React from 'react';
 
 interface Props {
-     stringField?: string;
-    // numberField: number;
-    // booleanField: boolean;
+    stringField?: string;
+    numberField?: number;
+    booleanField?: boolean;
+    objField?: TodoItemModel;
 }
 
 interface State {

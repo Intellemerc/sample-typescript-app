@@ -8,6 +8,7 @@ const logo = require('./logo.svg');
 
 class App extends React.Component<null, null> {
   render() {
+    // const todo: TodoItemModel = {id: '', text: '', created: new Date(), completed: true};
     return (
       <div className="App">
         <div className="App-header">
