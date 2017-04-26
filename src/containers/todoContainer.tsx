@@ -29,13 +29,11 @@ interface StoreProps extends ExternalProps {
 
 const TodoContainer = ({ todos, addTodo, toggleCompleted, removeTodo, PersonsName }: StoreProps) => {
   let todoTextField: HTMLInputElement;
-  
   const submit = (event: any) => {
     addTodo(todoTextField.value);
     todoTextField.value = '';
     event.preventDefault();
   };
-
   return (
     <TodoListBox>
       <div>
