@@ -1,3 +1,4 @@
+import { ActionCreator } from 'typescript-fsa';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -18,18 +19,18 @@ const RemoveTodo = styled.img`
 
 interface Props {
     todo: TodoItemModel;
-    toggleCompleted: (id: string) => void;
-    removeTodo: (id: string) => void;
+    toggleCompleted: ActionCreator<string>;
+    removeTodo: ActionCreator<string>;
 }
-const TodoItem = ({todo, toggleCompleted, removeTodo}: Props) => (
-            <div>
-                <input type="checkbox" checked={!!todo.completed} onChange={toggleCompleted.bind(null, todo.id)}/> 
-                - {todo.completed ? 
-                        <Completed>{todo.text}</Completed> 
-                        : todo.text
-                    }
-                <RemoveTodo src={trashIco} onClick={removeTodo.bind(null, todo.id)} />
-            </div>
+const TodoItem = ({ todo, toggleCompleted, removeTodo }: Props) => (
+    <div>
+        <input type="checkbox" checked={!!todo.completed} onChange={() => toggleCompleted(todo.id)} /> 
+        {todo.completed ?
+            <Completed>{todo.text}</Completed>
+            : todo.text
+        }
+        <RemoveTodo src={trashIco} onClick={() => removeTodo(todo.id)} />
+    </div>
 );
 
 export default TodoItem;

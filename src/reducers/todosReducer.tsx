@@ -15,31 +15,26 @@ const initialState: todoItemModel[] = [
 ];
 
 export default function todos(state: todoItemModel[] = initialState, action: Action) {
-  if (isType(action, toggleCompleted)) {
-    return state.map( 
-                    itm => itm.id === action.payload ?
-                          {...itm, completed: !itm.completed} : itm
-    );
-  } else if (isType(action, addTodo)) {
-    if (action.payload !== '') {
-      return [
-        ...state,
-        {
-          id: uuid(),
-          text: action.payload,
-          completed: false,
-          created: new Date()
-        }
-      ];
-    }
+  if (isType(action, addTodo)) {
+    return [
+      ...state,
+      {
+        id: uuid(),
+        text: action.payload,
+        completed: false,
+        created: new Date()
+      }
+    ];
   } else if (isType(action, removeTodo)) {
-    if (action.payload !== '') {
-      const idx = state.findIndex(itm => itm.id === action.payload);
-      return [
-        ...state.slice(0, idx),
-        ...state.slice(idx + 1)
-      ];
-    }
+    const idx = state.findIndex(itm => itm.id === action.payload);
+    return [
+      ...state.slice(0, idx),
+      ...state.slice(idx + 1)
+    ];
+  } else if (isType(action, toggleCompleted)) {
+    return state.map(
+      itm => itm.id === action.payload ? { ...itm, completed: !itm.completed } : itm
+    );
   }
   return state;
 }
